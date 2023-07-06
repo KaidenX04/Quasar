@@ -1,8 +1,4 @@
-﻿using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Security;
-
-namespace Quasar
+﻿namespace Quasar
 {
     internal static class Parser
     {
@@ -34,6 +30,11 @@ namespace Quasar
             }
             else if (Tokens[CurrentToken].TokenType == TokenType.VAR)
             {
+                return Define();
+            }
+            else if (Tokens[CurrentToken].TokenType == TokenType.IDENTIFIER)
+            {
+                CurrentToken--;
                 return Define();
             }
             else

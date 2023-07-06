@@ -44,6 +44,10 @@
                         break;
                     case ')':
                         tokens.Add(new Token(TokenType.RIGHT_PAREN, ")"));
+                        if (i == input.Length - 1)
+                        {
+                            tokens.Add(new Token(TokenType.SEMI_COL, ";"));
+                        }
                         break;
                     case ';':
                         tokens.Add(new Token(TokenType.SEMI_COL, ";"));
@@ -59,11 +63,15 @@
                             }
                             i--;
                             tokens.Add(new Token(TokenType.NUM, completeNumber));
+                            if (i == input.Length - 1)
+                            {
+                                tokens.Add(new Token(TokenType.SEMI_COL, ";"));
+                            }
                         }
                         if (Char.IsLetter(input[i]))
                         {
                             String completeIdentifier = "";
-                            while (i < input.Length && input[i] != ' ' && input[i] != '=' && input[i] != ';')
+                            while (i < input.Length && input[i] != ' ' && input[i] != '=' && input[i] != ';' && input[i] != ')')
                             {
                                 completeIdentifier += input[i];
                                 i++;
@@ -76,6 +84,10 @@
                             else
                             {
                                 tokens.Add(new Token(TokenType.IDENTIFIER, completeIdentifier));
+                            }
+                            if (i == input.Length - 1)
+                            {
+                                tokens.Add(new Token(TokenType.SEMI_COL, ";"));
                             }
                         }
                         break;
