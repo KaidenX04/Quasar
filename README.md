@@ -3,8 +3,10 @@ A tree-walk REPL arithmetic interpreter built on top of C#. Has support for vari
 
 # How to Use
 
-Note: 
-if you execute more than one statement per line, you must use semicolons in between the statements. Otherwise, you don't need to use semicolons.
+Notes: 
+
+-if you execute more than one statement per line, you must use semicolons in between the statements. Otherwise, you don't need to use semicolons.
+-An expression is any valid combination of numbers, variables, and symbols that will evaluate into a result;
 
 ### Define Variable
 ```
