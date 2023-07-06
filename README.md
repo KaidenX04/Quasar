@@ -19,7 +19,7 @@ variableName = expression
 
 ### Print Result
 ```
-print expression/variable
+print expression
 ```
 
 ### Symbols
