@@ -1,4 +1,8 @@
-﻿namespace Quasar
+﻿using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
+using System.Security;
+
+namespace Quasar
 {
     internal static class Parser
     {
@@ -8,11 +12,10 @@
 
         public static List<Statement> statements;
 
-        public static Environment Environment;
+        public static Environment env = new Environment();
 
         public static List<Statement> Parse(List<Token> tokens)
         {
-            Environment = new Environment();
             statements = new List<Statement>();
             Tokens = tokens;
             CurrentToken = 0;
@@ -29,9 +32,53 @@
             {
                 return Print();
             }
+            else if (Tokens[CurrentToken].TokenType == TokenType.VAR)
+            {
+                return Define();
+            }
             else
             {
                 return Expression();
+            }
+        }
+
+        public static Statement Define()
+        {
+            CurrentToken++;
+            string identifier;
+            if (Tokens[CurrentToken].TokenType == TokenType.IDENTIFIER)
+            {
+                identifier = Tokens[CurrentToken].Value;
+                CurrentToken++;
+            }
+            else
+            {
+                Quasar.ThrowException("Expected identifier after var.");
+                CurrentToken++;
+                return null;
+            }
+            if (Tokens[CurrentToken].TokenType == TokenType.ASSIGNMENT)
+            {
+                CurrentToken++;
+            }
+            else
+            {
+                Quasar.ThrowException("Expected = after identifier.");
+                CurrentToken++;
+                return null;
+            }
+            Statement value = Expression();
+            CurrentToken--;
+            if (CurrentToken < Tokens.Count && Tokens[CurrentToken].TokenType == TokenType.SEMI_COL)
+            {
+                CurrentToken++;
+                return new Statement.Assignment(identifier, value, ref env);
+            }
+            else
+            {
+                Quasar.ThrowException("Expected ';' after definition statement.");
+                CurrentToken++;
+                return null;
             }
         }
 
@@ -64,6 +111,7 @@
             else
             {
                 Quasar.ThrowException("Expected ';' after expression statement.");
+                CurrentToken--;
                 return null;
             }
         }
@@ -145,9 +193,15 @@
                         return null;
                     }
                 }
-                else
+                else if (current.TokenType == TokenType.IDENTIFIER)
                 {
-                    Quasar.ThrowException("Letter in arithmetic expression.");
+                    Expression.Identifier expression = new(current, ref env);
+                    CurrentToken++;
+                    return expression;
+                }
+                else 
+                {
+                    Quasar.ThrowException("Invalid char in expression.");
                     CurrentToken++;
                     return null;
                 }

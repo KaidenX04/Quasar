@@ -10,15 +10,20 @@
 
             public Statement Value;
 
-            public Assignment(string name, Statement value)
+            public Environment Env;
+
+            public Assignment(string name, Statement value, ref Environment env)
             {
                 Name = name;
                 Value = value;
+                Env = env;
             }
 
             public override Expression execute()
             {
-                return new Expression.Literal(null);
+                Expression.Literal value = Value.execute() as Expression.Literal;
+                Env.Define(Name, value.Value);
+                return new Expression.Literal(value.Value);
             }
         }
 

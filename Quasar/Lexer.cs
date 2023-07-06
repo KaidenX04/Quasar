@@ -63,7 +63,7 @@
                         if (Char.IsLetter(input[i]))
                         {
                             String completeIdentifier = "";
-                            while (i < input.Length && input[i] != ' ' && input[i] != '=')
+                            while (i < input.Length && input[i] != ' ' && input[i] != '=' && input[i] != ';')
                             {
                                 completeIdentifier += input[i];
                                 i++;

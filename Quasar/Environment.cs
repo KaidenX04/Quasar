@@ -22,13 +22,18 @@
         }
 
         public string Get(string name) 
-        { 
+        {
             if (environment.ContainsKey(name)) 
             {
                 return environment[name];
             }
             Quasar.ThrowException("Access nonexistant variable.");
             return null;
+        }
+
+        public override string ToString()
+        {
+            return $"Environment ({GetHashCode()})";
         }
     }
 }

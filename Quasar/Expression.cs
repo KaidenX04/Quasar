@@ -100,6 +100,24 @@
             }
         }
 
+        public class Identifier : Expression
+        {
+            public Token identifier;
+
+            public Environment environment;
+
+            public Identifier(Token identifier, ref Environment environment) 
+            {
+                this.identifier = identifier;
+                this.environment = environment;
+            }
+
+            public override Expression evaluate()
+            {
+                return new Literal(environment.Get(identifier.Value));
+            }
+        }
+
         private string GetLiteralValue(Expression expression)
         {
             Literal literal = expression as Literal;
