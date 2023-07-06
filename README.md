@@ -1,2 +1,2 @@
 # Quasar
-A tree walk interpreted language built on top of C#.
+A tree walk interpreted language implementation built on top of C#.
