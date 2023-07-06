@@ -1,2 +1,2 @@
 # Quasar
-A tree walk interpreted language implementation built on top of C#.
+A tree-walk arithmetic interpreter built on top of C#. Has support for variables and printing.
