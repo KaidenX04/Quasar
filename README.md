@@ -14,3 +14,8 @@ or
 ```
 variableName = expression
 ```
+
+### Print Result
+```
+print expression/variable;
+```
